@@ -38,7 +38,18 @@ public class AppConfig {
 
   @Bean
   public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+    // Creamos un PasswordEncoder que no haga ninguna transformación
+    return new PasswordEncoder() {
+      @Override
+      public String encode(CharSequence rawPassword) {
+        return rawPassword.toString(); // Devuelve la contraseña tal cual
+      }
+
+      @Override
+      public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        return rawPassword.toString().equals(encodedPassword); // Compara la contraseña en texto claro
+      }
+    };
   }
 
   @Bean

@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
         .telefono(request.getTelefono())
         .direccion(request.getDireccion())
         .email(request.getEmail())
-        .password(passwordEncoder.encode(request.getPassword()))
+        .password(request.getPassword())
         .role(Role.USER)
         .build();
     personaRepository.save(user);
