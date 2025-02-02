@@ -11,7 +11,8 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**") // Ruta base de la API
                 .allowedOrigins("http://localhost:4200") // URL del frontend Angular
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*") // Permite todas las cabeceras
                 .allowCredentials(true);
     }
 }

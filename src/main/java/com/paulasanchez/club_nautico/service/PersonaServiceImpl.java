@@ -27,13 +27,17 @@ public class PersonaServiceImpl implements PersonaService {
 	}
 
 	@Override
-	public Persona savePersona(Persona persona) throws DuplicateException {
-		if (personaRepository.existsById(persona.getDni())) {
-            throw new DuplicateException("El persona con dni " + persona.getDni() + " ya esta registrado");
-        } else {
-            return personaRepository.save(persona);
+    public Persona savePersona(Persona persona) throws DuplicateException {
+        if (persona == null || persona.getDni() == null || persona.getDni().trim().isEmpty()) {
+            throw new IllegalArgumentException("El DNI no puede estar vacío o nulo");
         }
-	}
+
+        if (personaRepository.existsById(persona.getDni())) {
+            throw new DuplicateException("La persona con DNI " + persona.getDni() + " ya está registrada");
+        }
+
+        return personaRepository.save(persona);
+    }
 
 	@Override
 	public Persona updatePersona(String dni, Persona persona) throws NotFoundException {
@@ -53,6 +57,18 @@ public class PersonaServiceImpl implements PersonaService {
             if (Objects.nonNull(persona.getApellidos()) && !" ".equalsIgnoreCase(persona.getApellidos())) {
                 persona_db.setApellidos(persona.getApellidos());
             }
+            if (Objects.nonNull(persona.getTelefono()) && !persona.getTelefono().trim().isEmpty()) {
+                persona_db.setTelefono(persona.getTelefono());
+            }
+
+            if (Objects.nonNull(persona.getDireccion()) && !persona.getDireccion().trim().isEmpty()) {
+                persona_db.setDireccion(persona.getDireccion());
+            }
+
+            if (Objects.nonNull(persona.getEsPatron())) {
+                persona_db.setEsPatron(persona.getEsPatron());
+            }
+
             return personaRepository.save(persona_db);
         }
 	}

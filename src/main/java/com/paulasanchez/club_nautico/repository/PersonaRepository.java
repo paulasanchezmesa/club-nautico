@@ -10,7 +10,7 @@ import com.paulasanchez.club_nautico.entity.Persona;
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, String> {
 
-  Optional<Persona> findPersonaByEmail(String email);
+//  Optional<Persona> findPersonaByEmail(String email);
 
   Optional<Persona> findByDni(String dni);
 
